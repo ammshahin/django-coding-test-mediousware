@@ -17,20 +17,39 @@
             </div>
             <div class="col-md-2">
                 <select name="variant" id="" class="form-control">
-                    <option selected disabled>--Select A Variant--</option>
-
-                </select>
+                    {% for v in variants %}
+                    <optgroup label="{{v.title}}">
+                      {% for i in v.productvariant_set.all %}
+                      <option value="{{i.variant_title}}">{{i.variant_title}}</option>
+                      {% endfor %}
+                    </optgroup>
+          
+                    {% endfor %}
+                  </select>
             </div>
 
             <div class="col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Price Range</span>
+                      <span class="input-group-text">Price Range</span>
                     </div>
-                    <input type="text" name="price_from" aria-label="First name" placeholder="From"
-                           class="form-control">
-                    <input type="text" name="price_to" aria-label="Last name" placeholder="To" class="form-control">
-                </div>
+                    <input
+                      type="number"
+                      value="0"
+                      name="price_from"
+                      aria-label="First name"
+                      placeholder="From"
+                      class="form-control"
+                    />
+                    <input
+                      type="number"
+                      value="1000"
+                      name="price_to"
+                      aria-label="Last name"
+                      placeholder="To"
+                      class="form-control"
+                    />
+                  </div>
             </div>
             <div class="col-md-2">
                 <input type="date" name="date" placeholder="Date" class="form-control">
@@ -106,7 +125,7 @@
                 <li class="page-item">
                   <a
                     class="page-link"
-                    href="{% url 'product:list.product' %}?page={{page.previous_number}}"
+                    href="{% url 'product:list.product' %}?page={{page.previous_page_number}}"
                     aria-label="Previous"
                   >
                     <span aria-hidden="true">&laquo;</span>
